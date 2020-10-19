@@ -27,5 +27,8 @@
     "packages": [
       "packages/*"
     ]
+  },
+  "dependencies": {
+    "typescript": "^4.0.3"
   }
 }

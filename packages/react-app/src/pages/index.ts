@@ -1,0 +1,6 @@
+export { default as Center } from './Center'
+export { default as Connect } from './Connect'
+export { default as Explore } from './Explore'
+export { default as NftCreate } from './NftCreate'
+export { default as NftDetail } from './NftDetail'
+export { default as Page } from './Page'
