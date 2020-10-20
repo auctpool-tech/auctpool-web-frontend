@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useState } from 'react'
 import styled from 'styled-components'
-import { ApplicationModal } from '../constants/ApplicationModal'
+import { ApplicationModal } from '../constants'
 
 interface ModalContextProps {
   content?: React.ReactNode,

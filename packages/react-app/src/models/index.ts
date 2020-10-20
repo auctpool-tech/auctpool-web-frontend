@@ -1,3 +1,4 @@
-export type { default as Auction } from './Auction'
-export type { default as Nft } from './Nft'
-export type { default as Trade } from './Trade'
+export type { Auction } from './Auction'
+export type { Nft } from './Nft'
+export type { Trade } from './Trade'
+export type { WalletInfo } from './Wallet'

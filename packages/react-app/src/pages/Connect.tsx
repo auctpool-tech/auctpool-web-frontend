@@ -7,16 +7,13 @@ import  LogoMetamask from '../assets/connect-metamask.png'
 import  LogoWalletConnect from '../assets/connect-walletconnect.png'
 import  LogoFortmatic from '../assets/connect-fortmatic.png'
 import Waves from '../assets/waves.png'
-
-// import useModal from '../hooks/useModal'
-// import { LoadingModal } from '../components/modal'
-import { useWallet } from 'use-wallet'
+import { useActiveWeb3React } from '../hooks'
 
 const Connect: React.FC = () => {
-    const wallet = useWallet()
+    const { account, chainId } = useActiveWeb3React()
 
     useEffect(() => {
-        if (wallet.account) {
+        if (account) {
 
         }
     }, [])

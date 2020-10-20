@@ -1,5 +1,3 @@
-interface Trade {
+export interface Trade {
 
 }
-
-export default Trade

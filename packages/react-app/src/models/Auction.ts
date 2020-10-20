@@ -1,6 +1,4 @@
 
-interface Auction {
+export interface Auction {
 
 }
-
-export default Auction

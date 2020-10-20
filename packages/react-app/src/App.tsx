@@ -5,25 +5,25 @@ import { Center, Connect, Explore, NftCreate, NftDetail } from './pages'
 import { Header } from './components/header'
 import ThemeProvider from './theme'
 import { ModalProvider } from './context'
-import { UseWalletProvider } from 'use-wallet'
+import { createWeb3ReactRoot, Web3ReactProvider } from '@web3-react/core'
+import { NETWORK_CONTEXT } from './constants'
+import { Provider } from 'react-redux'
+import { getLibrary } from './utils'
+import store from './state'
+
+const Web3ProviderNetwork = createWeb3ReactRoot(NETWORK_CONTEXT)
 
 const Providers: React.FC = ({children}) => {
   return (
-    <ThemeProvider>
-      <UseWalletProvider 
-        chainId={1} 
-        connectors={{
-          walletconnect: {
-            rpcUrl: ""
-          },
-          fortmatic: {
-            apiKey: ""
-          }
-        }}
-      >
-        <ModalProvider>{children}</ModalProvider>
-      </UseWalletProvider>
-    </ThemeProvider>
+    <Web3ReactProvider getLibrary={getLibrary} >
+      <Web3ProviderNetwork getLibrary={getLibrary} >
+        <Provider store={store} >
+          <ThemeProvider>
+              <ModalProvider>{children}</ModalProvider>
+            </ThemeProvider>
+        </Provider>
+      </Web3ProviderNetwork>
+    </Web3ReactProvider>
   )
 }
 

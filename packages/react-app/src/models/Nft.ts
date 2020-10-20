@@ -1,13 +1,11 @@
 import Auction from './Auction'
 
-interface Nft {
+export interface Nft {
     uuid: string
     nftMedia: string //ipfs 
     owner: string
     creator: string
-    properties?: map<string, string>
+    properties?: Map<string, string>
     
     auction?: Auction
 }
-
-export default Nft
