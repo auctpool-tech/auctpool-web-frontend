@@ -1,0 +1,8 @@
+{
+  "name": "@project/core",
+  "version": "1.0.0",
+  "description": "core module",
+  "main": "index.js",
+  "license": "MIT",
+  "types": "index.d.ts"
+}

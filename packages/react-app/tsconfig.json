@@ -21,10 +21,9 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "jsx": "preserve",
-    "downlevelIteration": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "strict": true
   },
   "exclude": [
     "node_modules",

@@ -19,6 +19,7 @@
     "@ethersproject/contracts": "^5.0.1",
     "@ethersproject/providers": "^5.0.4",
     "@project/contracts": "^1.0.0",
+    "@project/core": "^1.0.0",
     "@reduxjs/toolkit": "^1.4.0",
     "@testing-library/dom": "^6.12.2",
     "@testing-library/jest-dom": "^4.2.4",

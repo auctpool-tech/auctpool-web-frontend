@@ -1,22 +1,98 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Page } from '../pages'
 import { Tag } from '../theme'
+import { AbstractConnector } from '@web3-react/abstract-connector'
+import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 
-import  LogoMetamask from '../assets/connect-metamask.png'
-import  LogoWalletConnect from '../assets/connect-walletconnect.png'
-import  LogoFortmatic from '../assets/connect-fortmatic.png'
 import Waves from '../assets/waves.png'
-import { useActiveWeb3React } from '../hooks'
+import { useWeb3React } from '@web3-react/core'
+
+import usePrevious from '../hooks'
+import { ApplicationModal, SUPPORTED_WALLETS } from '../constants'
+import { injected } from '../connectors'
+
+import { useModalOpened, useToggleModal } from '../state/application/hooks'
+import { useHistory } from 'react-router-dom'
+
+enum CONNECT_STATE {
+    OPTIONS,
+    LOADING,
+    ACCOUNT
+}
 
 const Connect: React.FC = () => {
-    const { account, chainId } = useActiveWeb3React()
+    const { active, account, connector, activate, error } = useWeb3React()
+    const [ connectState, setConnectState ] = useState<CONNECT_STATE>(CONNECT_STATE.OPTIONS)
+    const loadingModal = useModalOpened(ApplicationModal.Loading)
+    const toggleLoadingModal = useToggleModal(ApplicationModal.Loading)
+    const previousAccount = usePrevious(account)
+    const activePrevious = usePrevious(active)
+    const connectorPrevious = usePrevious(connector)
+    const history = useHistory()
+    
+    useEffect(() => {
+        if (connectState === CONNECT_STATE.ACCOUNT && account && !previousAccount && 
+            (active && !activePrevious) && (connector && connector !== connectorPrevious) &&
+            !error) {
+            toggleLoadingModal()
+            history.push('/explore')
+        }
+    }, [account, previousAccount, toggleLoadingModal, loadingModal])
 
     useEffect(() => {
-        if (account) {
-
+        if (loadingModal) {
+            setConnectState(CONNECT_STATE.OPTIONS)
+            toggleLoadingModal()
         }
-    }, [])
+    }, [loadingModal])
+    
+    const tryActivation = async (connector: AbstractConnector | undefined) => {
+        setConnectState(CONNECT_STATE.LOADING)
+        if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
+            connector.walletConnectProvider = undefined
+        }
+        connector && activate(connector, undefined, true)
+    }
+
+    function walletOptions() {
+        const isMetamask = window.ethereum && window.ethereum.isMetaMask
+        return Object.keys(SUPPORTED_WALLETS).map(key => {
+            let walletInfo = SUPPORTED_WALLETS[key]
+            if (walletInfo.connector === injected) {
+                if (!(window.web3 || window.ethereum)) {
+                    if (walletInfo.name === 'MetaMask') {
+                        return (
+                            <ConnectCell 
+                                onClick={
+                                    () => {walletInfo.connector !== connector && tryActivation(walletInfo.connector)}
+                                }
+                                logo={walletInfo.iconName}
+                                text={walletInfo.name}
+                            />
+                        )
+                    }
+                }
+                // don't return metamask if injected provider isn't metamask
+                else if (walletInfo.name === 'MetaMask' && !isMetamask) {
+                    return null
+                }
+                // likewise for generic
+                else if (walletInfo.name === 'Injected' && isMetamask) {
+                    return null
+                }
+            }
+            return (
+                <ConnectCell 
+                    onClick={
+                        () => {walletInfo.connector !== connector && tryActivation(walletInfo.connector)}
+                    }
+                    logo={walletInfo.iconName}
+                    text={walletInfo.name}
+                />
+            )
+        })
+    }
 
     return (
         <Page background={Waves}>
@@ -27,9 +103,7 @@ const Connect: React.FC = () => {
                     </Tag.headerTitle>
                 </StyledTitle>
                 <StyledWalletList>
-                    <ConnectCell logo={LogoMetamask} text="Metamask" onClick={() => { wallet.connect('injected') }} />
-                    <ConnectCell logo={LogoWalletConnect} text="WalletConnect" onClick={() => { wallet.connect('walletconnect') }} />
-                    <ConnectCell logo={LogoFortmatic} text="Fortmatic" onClick={() => { wallet.connect('fortmatic') }} />
+                    { walletOptions() }
                 </StyledWalletList>
                 <StyledSecurityStatement>
                     Non-custodial & Secure

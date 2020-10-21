@@ -11,6 +11,10 @@ const client = new ApolloClient({
   uri:  process.env.APOLLO_CLIENT,
 });
 
+if ('ethereum' in window) {
+  (window.ethereum as any).autoRefreshOnNetworkChange = false
+}
+
 ReactDOM.render(
   <ApolloProvider client={client}>
     <App />

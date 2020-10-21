@@ -1,8 +1,12 @@
-import { Token } from '../utils'
+import { Token } from '@project/core'
 import { fortmatic, injected, walletconnect } from '../connectors'
 import { WalletInfo } from '../models' 
 
-export declare enum ChainId {
+// import  LogoMetamask from '../assets/connect-metamask.png'
+// import  LogoWalletConnect from '../assets/connect-walletconnect.png'
+// import  LogoFortmatic from '../assets/connect-fortmatic.png'
+
+export enum ChainId {
     MAINNET = 1,
     ROPSTEN = 3,
     RINKEBY = 4,
@@ -10,10 +14,12 @@ export declare enum ChainId {
     KOVAN = 42
 }
 
-export declare enum ApplicationModal {
+export enum ApplicationModal {
     Loading,
     Processing,
-    Biding
+    Biding,
+    NftListFilter,
+    WalletMenu
 }
 
 export const SUPPORTED_WALLETS: {[key: string]: WalletInfo} = {
@@ -25,18 +31,18 @@ export const SUPPORTED_WALLETS: {[key: string]: WalletInfo} = {
     METAMASK: {
         connector: injected,
         name: "Metamask",
-        iconName: ""
+        iconName: "../assets/connect-metamask.png"
     },
     WALLET_CONNECT: {
         connector: walletconnect,
         name: "WalletConnect",
-        iconName: ""
+        iconName: "../assets/connect-walletconnect.png"
     },
     FORTMATIC: {
         connector: fortmatic,
         name: "Fortmatic",
-        iconName: ""
-    },
+        iconName: "../assets/connect-fortmatic.png"
+    }
 }
 
 export const NETWORK_CONTEXT = 'AuctPool-Network'

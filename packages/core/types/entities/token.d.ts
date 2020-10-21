@@ -1,5 +1,5 @@
-import { Currency } from './Currency'
-import { ChainId } from '../constants'
+import { Currency } from './currency'
+import { ChainId } from '../../constants'
 
 export declare class Token extends Currency {
     readonly chainId: ChainId;

@@ -1,4 +1,3 @@
-import { Web3Provider } from '@ethersproject/providers'
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { FortmaticConnector } from '@web3-react/fortmatic-connector'
@@ -6,7 +5,7 @@ import { FortmaticConnector } from '@web3-react/fortmatic-connector'
 const FORMATIC_KEY = process.env.REACT_APP_FORTMATIC_KEY
 
 export const NETWORK_CHAIN_ID: number = parseInt(process.env.REACT_APP_CHAIN_ID ?? '1')
-export const NETWORK_URL: string = process.env.REACT_APP_NETWORK_URL
+export const NETWORK_URL: string | undefined = process.env.REACT_APP_NETWORK_URL
 
 
 if (typeof NETWORK_URL === 'undefined' || NETWORK_CHAIN_ID === 0) {

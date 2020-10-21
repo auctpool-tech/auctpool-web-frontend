@@ -4,11 +4,11 @@ import { Web3ReactContextInterface } from '@web3-react/core/dist/types'
 
 import { useContext, useCallback, useEffect, useRef } from 'react'
 import { ModalContext } from '../context'
-import { NetworkContextName, ApplicationModal, ChainId } from '../constants'
+import { NETWORK_CONTEXT, ApplicationModal, ChainId } from '../constants'
 
 export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> & { chainId?: ChainId } {
     const context = useWeb3ReactCore<Web3Provider>()
-    const contextNetwork = useWeb3ReactCore<Web3Provider>(NetworkContextName)
+    const contextNetwork = useWeb3ReactCore<Web3Provider>(NETWORK_CONTEXT)
     return context.active ? context : contextNetwork
 }
 
